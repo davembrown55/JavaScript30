@@ -36,30 +36,101 @@
       'Billings, Josh', 'Birrell, Augustine', 'Blair, Tony', 'Beecher, Henry', 'Biondo, Frank'
     ];
     
-    // Array.prototype.filter()
+        // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
+
+    const inventorsFifteenth = inventors.filter(obj => (obj.year >= 1500 && obj.year < 1600));
+    console.log("Inventors born in the 16th Century");
+    console.table(inventorsFifteenth);
 
     // Array.prototype.map()
     // 2. Give us an array of the inventors first and last names
 
+    const inventorNames = inventors.map((inventor) => 
+       inventor.first + " " + inventor.last);
+
+    console.log("Inventors names");
+    console.table(inventorNames);
+
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
 
+    const inventorsByAge = inventors.sort((inventorA, inventorB) => 
+        // if (inventorA.year < inventorB.year) {return -1} else {return 1};
+        inventorA.year < inventorB.year ?  -1:  1)
+        console.log("Inventors my Birth year oldest to newest");
+        console.table(inventorsByAge);
+
+
     // Array.prototype.reduce()
-    // 4. How many years did all the inventors live all together?
+    // 4. How many years did all the inventors live alltogether?
+    const inventorYearsSum = inventors.reduce((total, inventor) => 
+      total += (inventor.passed - inventor.year), 0);
+
+    console.log("How many years did all the inventors live alltogether?");
+    console.log(inventorYearsSum);
 
     // 5. Sort the inventors by years lived
+    const yearsLived = inventors.sort((a, b) => {
+      let aAge = a.passed - a.year;
+      let bAge = b.passed - b.year;        
+      return aAge > bAge ? 1 : -1});
+
+    const inventorAgeASC = yearsLived.map((inventor) => {
+      let age = inventor.passed - inventor.year;
+      return {...inventor, ['age']: age }     
+    });
+
+    console.log("Inventors: Years lived ascending");
+    console.table(yearsLived);
+    console.log("Inventors: Years lived ascending with age");
+    console.table(inventorAgeASC);
+
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
-
+    const streetLink = document.querySelectorAll('.mw-category-group li a ');    
+    let linkText = [];
+    for(link of streetLink) {
+      linkText.push(link.textContent);
+    };
+    const includesDE = linkText.filter((text) => text.includes('de'));
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
 
+    const splitNames = people.map((person) => person.split(', '));    
+    const lNameOrdered = splitNames.sort((person1, person2) => 
+     person1[0] > person2[0] ? 1 : -1);
+
+    console.table(splitNames);
+    console.table(lNameOrdered);
+
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+
+    const totalTravel = data.reduce((prev, current) => {
+      if(!prev[current]) {
+        prev[current] = 0;
+      }
+      prev[current]++;
+      return prev;
+    }, {})
+
+    console.log(totalTravel);
+
+
+    // const tally = data.reduce((tallied, travelType) => {
+    //   if (!tallied[travelType]) {
+    //       tallied[travelType] = 0;
+    //   }
+    //   tallied[travelType]++;
+    //   return tallied; 
+    //   }, {})
+
+    // console.log(tally);   
+
 
   </script>
 </body>
